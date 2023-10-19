@@ -223,6 +223,13 @@ jobs:
           repository: 'flowfuse/helm'
           fetch-depth: 0
           path: 'helm'
+      - name: Helm lint
+        run: |
+          helm lint --quiet helm/helm/flowforge
+          if [ $? -ne 0 ]; then
+            echo "helm lint failed."
+            exit 1
+          fi
       - name: Package
         run: |
           helm package -d . helm/helm/flowforge
